@@ -173,4 +173,4 @@ Colours are CSS variables in `:root[data-theme='light']` and `:root[data-theme='
 
 ## Tech stack
 
-React 19 · React Router 7 (`HashRouter`) · Vite 8 · ESLint 10 with `@stylistic` · plain CSS. No backend and no runtime dependencies beyond React and React Router.
+React 19 · React Router 7 (`HashRouter`) · Vite 8 · ESLint 10 with `@stylistic` · plain CSS.
