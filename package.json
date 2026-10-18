@@ -1,0 +1,31 @@
+{
+  "name": "quickref",
+  "version": "1.0.0",
+  "description": "Developer cheat sheets with 1,700+ copy-ready snippets: from first install on Windows, macOS or Linux to production deploys on AWS, GCP and Azure.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": ["cheat-sheet", "developer-tools", "react", "vite", "laravel", "nodejs", "python", "devops", "aws", "gcp", "azure"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "vite": "^8.3.4"
+  },
+  "type": "module"
+}
