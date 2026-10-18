@@ -14,6 +14,7 @@ import java from './sheets/java.js'
 import sql from './sheets/sql.js'
 import git from './sheets/git.js'
 import docker from './sheets/docker.js'
+import nginx from './sheets/nginx.js'
 import bash from './sheets/bash.js'
 import http from './sheets/http.js'
 import aws from './sheets/aws.js'
@@ -43,6 +44,7 @@ export const techs = {
   SQL: { short: 'SQL' },
   Git: { short: 'G' },
   Docker: { short: 'D' },
+  Nginx: { short: 'NG' },
   Bash: { short: 'B' },
   HTTP: { short: 'HTTP' },
   AWS: { short: 'AWS' },
@@ -78,7 +80,7 @@ export const sheets = [
   react, nextjs,
   nodeExpress,
   python, java,
-  sql, git, docker, bash, http,
+  sql, git, docker, nginx, bash, http,
   cicd, playwright, cypress, jest, phpunit, aws, gcp, azure,
 ].map(normalize)
 

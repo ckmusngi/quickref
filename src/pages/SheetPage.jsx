@@ -64,13 +64,13 @@ export default function SheetPage() {
           <h4>On this sheet</h4>
           {groupRuns(sheet.sections).map(run => run.group ? (
             <div key={run.id} className="toc-group">
-              <a href={`#/sheets/${sheet.slug}`} className="toc-group-title" onClick={scrollTo(run.id)}>{run.group}</a>
+              <a href={`#${run.id}`} className="toc-group-title" onClick={scrollTo(run.id)}>{run.group}</a>
               {run.sections.map(sec => (
-                <a key={sec.id} href={`#/sheets/${sheet.slug}`} onClick={scrollTo(sec.id)}>{sec.title}</a>
+                <a key={sec.id} href={`#${sec.id}`} onClick={scrollTo(sec.id)}>{sec.title}</a>
               ))}
             </div>
           ) : (
-            <a key={run.id} href={`#/sheets/${sheet.slug}`} onClick={scrollTo(run.id)}>{run.sections[0].title}</a>
+            <a key={run.id} href={`#${run.id}`} onClick={scrollTo(run.id)}>{run.sections[0].title}</a>
           ))}
           {related.length > 0 && (
             <>

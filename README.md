@@ -23,7 +23,7 @@ Every sheet starts with a step-by-step **Setup**, shows commands for each operat
 | --- | --- |
 | **Frontend** | JavaScript · jQuery · AJAX (fetch, axios and jQuery side by side) · SEO · TypeScript · React (every hook, Zustand, React Router) · Next.js (App Router, Server Actions, caching, auth, deployment) |
 | **Backend** | Laravel (Blade, CSRF, jQuery & AJAX, Sanctum, queues…) · PHP (imports, OOP, PDO, session auth) · WordPress (themes, plugins, blocks, REST API, hosting) · Node (Express, Sequelize, JWT auth) · Python (Django, FastAPI) · Java (modern Java, Spring Boot, JPA, Security) · SQL (with MySQL and PostgreSQL) · HTTP |
-| **DevOps & Tools** | Git (rebase, checkout) · Docker · Bash (with PowerShell equivalents) · CI/CD (GitHub Actions, GitLab CI) |
+| **DevOps & Tools** | Git (rebase, checkout) · Docker · Nginx · Bash (with PowerShell equivalents) · CI/CD (GitHub Actions, GitLab CI) |
 | **Testing** | Jest (with React Testing Library, Supertest, Vitest) · PHPUnit (with Laravel testing and Pest) · Playwright · Cypress |
 | **Cloud & Deployment** | AWS (EC2, RDS, S3, SQS) · GCP (Compute Engine, Cloud SQL, Storage, Pub/Sub) · Azure (App Service, Functions, Flexible Server, Blob, Service Bus) |
 
@@ -49,15 +49,26 @@ npm run dev        # http://localhost:5173
 
 ## Deploying
 
-`npm run build` produces a static site in `dist/`. Upload it to any static host: Netlify, Vercel, GitHub Pages, S3 + CloudFront, Cloud Storage, Firebase Hosting, Azure Static Web Apps, or Nginx.
+`npm run build` produces a static site in `dist/`. Upload it to any static host: Netlify, Vercel, Cloudflare Pages, S3 + CloudFront, Cloud Storage, Firebase Hosting, Azure Static Web Apps, or Nginx.
 
-The app uses `HashRouter` (`#/sheets/react`), so it needs no server rewrite rules. To use clean URLs, switch to `BrowserRouter` in `src/main.jsx` and add an SPA fallback to `index.html` on your host. The AWS, GCP and Azure sheets include ready Nginx, CloudFront and Firebase configs.
+The app uses clean URLs (`/sheets/react`) with React Router's `BrowserRouter`, so **the host must serve `index.html` for every path**. Otherwise, refreshing a page like `/sheets/react` returns a 404.
+
+| Host | SPA fallback |
+| --- | --- |
+| Netlify | `public/_redirects` is included (`/*  /index.html  200`) |
+| Vercel | `vercel.json` is included (rewrite everything to `/index.html`) |
+| Nginx | `try_files $uri $uri/ /index.html;` (see the Nginx sheet) |
+| Firebase Hosting | `"rewrites": [{ "source": "**", "destination": "/index.html" }]` in `firebase.json` |
+| S3 + CloudFront | Error pages 403/404 → `/index.html` with response 200 |
+| GitHub Pages | No rewrites: copy `dist/index.html` to `dist/404.html` after building |
+
+`npm run dev` and `npm run preview` already handle this locally. Old hash links (`/#/sheets/react`) are converted to clean URLs automatically in `src/main.jsx`.
 
 ## Project structure
 
 ```
 src/
-  main.jsx              # app entry: router + theme provider
+  main.jsx              # app entry: BrowserRouter + theme provider (+ old #/ link redirect)
   App.jsx               # routes
   data/
     index.js            # registers sheets, tech badges, categories, popular/recent lists, slug aliases
@@ -82,7 +93,7 @@ eslint.config.js        # ESLint 10 flat config (+ @stylistic formatting rules)
 import { c } from './shared/code.js'
 
 export default {
-  slug: 'my-sheet',           // URL: #/sheets/my-sheet
+  slug: 'my-sheet',           // URL: /sheets/my-sheet
   title: 'MySheet',           // keep it to one word where possible
   tech: 'MySheet',            // must match a key in `techs` in data/index.js
   category: 'backend',        // frontend | backend | devops | testing | cloud
@@ -165,7 +176,7 @@ Two character sequences can't appear raw inside it:
 ```bash
 npm run lint:fix && npm run lint
 npm run build
-npm run dev        # open #/sheets/my-sheet and try the Copy buttons
+npm run dev        # open /sheets/my-sheet and try the Copy buttons
 ```
 
 ## Theming
@@ -174,4 +185,4 @@ Colours are CSS variables in `:root[data-theme='light']` and `:root[data-theme='
 
 ## Tech stack
 
-React 19 · React Router 7 (`HashRouter`) · Vite 8 · ESLint 10 with `@stylistic` · plain CSS.
+React 19 · React Router 7 (`BrowserRouter`) · Vite 8 · ESLint 10 with `@stylistic` · plain CSS.

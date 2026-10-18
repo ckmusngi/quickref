@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 import { sheets, popularSlugs } from '../data/index.js'
 import TechBadge from './TechBadge.jsx'
@@ -49,7 +50,8 @@ export default function SearchModal({ onClose }) {
     if (e.key === 'Enter' && results[active]) open(results[active])
   }
 
-  return (
+  // Portal to <body>: the header's backdrop-filter would otherwise trap the fixed backdrop inside the header
+  return createPortal(
     <div className="modal-backdrop" onMouseDown={onClose}>
       <div className="modal" onMouseDown={e => e.stopPropagation()} onKeyDown={onKey}>
         <div className="modal-search">
@@ -85,6 +87,7 @@ export default function SearchModal({ onClose }) {
           <span><kbd>↵</kbd> open</span>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
