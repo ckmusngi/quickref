@@ -1,7 +1,7 @@
 {
   "name": "quickref",
   "version": "1.0.0",
-  "description": "Developer cheat sheets with 1,700+ copy-ready snippets: from first install on Windows, macOS or Linux to production deploys on AWS, GCP and Azure.",
+  "description": "Developer cheat sheets with 2,000+ copy-ready snippets: from first install on Windows, macOS or Linux to production deploys on AWS, GCP and Azure.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

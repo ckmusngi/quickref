@@ -2,13 +2,13 @@
 
 **Find the command. Copy it, ship it.**
 
-QuickRef is a fast, searchable collection of developer cheat sheets: 22 sheets and 1,700+ copy-ready snippets, from first install on Windows, macOS or Linux to production deploys on AWS, GCP and Azure.
+QuickRef is a fast, searchable collection of developer cheat sheets: 20+ sheets and 2,000+ copy-ready snippets, from first install on Windows, macOS or Linux to production deploys on AWS, GCP and Azure.
 
 Every sheet starts with a step-by-step **Setup**, shows commands for each operating system where they differ, and gives every snippet its own **Copy** button. Press **⌘K / Ctrl+K** anywhere to search inside every sheet.
 
 ## Features
 
-- **22 cheat sheets** grouped into Frontend, Backend, DevOps & Tools, and Cloud & Deployment
+- **20+ cheat sheets** grouped into Frontend, Backend, DevOps & Tools, Testing, and Cloud & Deployment
 - **Setup first:** each sheet opens with install → create the project → run it
 - **Commands for each OS:** macOS, Linux and Windows (PowerShell / cmd) variants side by side
 - **Copy buttons everywhere,** including follow-up blocks ("Then run", "PowerShell", "php.ini"…)
@@ -21,9 +21,10 @@ Every sheet starts with a step-by-step **Setup**, shows commands for each operat
 
 | Category | Sheets |
 | --- | --- |
-| **Frontend** | JavaScript · jQuery · AJAX (fetch, axios and jQuery side by side) · SEO · TypeScript · React (every hook, Zustand, React Router) |
-| **Backend** | Laravel (Blade, CSRF, jQuery & AJAX, Sanctum, queues…) · PHP (imports, OOP, PDO, session auth) · Node (Express, Sequelize, JWT auth) · Python (Django, FastAPI) · SQL · MySQL · PostgreSQL · HTTP |
-| **DevOps & Tools** | Git (rebase, checkout) · Docker · Bash (with PowerShell equivalents) · CI/CD (GitHub Actions, GitLab CI) · Playwright |
+| **Frontend** | JavaScript · jQuery · AJAX (fetch, axios and jQuery side by side) · SEO · TypeScript · React (every hook, Zustand, React Router) · Next.js (App Router, Server Actions, caching, auth, deployment) |
+| **Backend** | Laravel (Blade, CSRF, jQuery & AJAX, Sanctum, queues…) · PHP (imports, OOP, PDO, session auth) · WordPress (themes, plugins, blocks, REST API, hosting) · Node (Express, Sequelize, JWT auth) · Python (Django, FastAPI) · Java (modern Java, Spring Boot, JPA, Security) · SQL (with MySQL and PostgreSQL) · HTTP |
+| **DevOps & Tools** | Git (rebase, checkout) · Docker · Bash (with PowerShell equivalents) · CI/CD (GitHub Actions, GitLab CI) |
+| **Testing** | Jest (with React Testing Library, Supertest, Vitest) · PHPUnit (with Laravel testing and Pest) · Playwright · Cypress |
 | **Cloud & Deployment** | AWS (EC2, RDS, S3, SQS) · GCP (Compute Engine, Cloud SQL, Storage, Pub/Sub) · Azure (App Service, Functions, Flexible Server, Blob, Service Bus) |
 
 The cloud sheets are complete walkthroughs: create the account and server, deploy Laravel, Node, Python or React behind Nginx with HTTPS, set up CI/CD, then connect a managed database, file storage and queues.
@@ -84,7 +85,7 @@ export default {
   slug: 'my-sheet',           // URL: #/sheets/my-sheet
   title: 'MySheet',           // keep it to one word where possible
   tech: 'MySheet',            // must match a key in `techs` in data/index.js
-  category: 'backend',        // frontend | backend | devops | cloud
+  category: 'backend',        // frontend | backend | devops | testing | cloud
   minutes: 20,
   lang: 'bash',               // default label for code blocks on this sheet
   description: 'One sentence shown on the card (clamped to 3 lines).',

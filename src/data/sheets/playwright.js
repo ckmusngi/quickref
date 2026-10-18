@@ -6,7 +6,7 @@ export default {
   slug: 'playwright',
   title: 'Playwright',
   tech: 'Playwright',
-  category: 'devops',
+  category: 'testing',
   minutes: 35,
   lang: 'ts',
   description: 'End-to-end testing with Playwright: setup on Windows, macOS and Linux, config and web server, locators, actions and assertions, logging in once, network mocking, API tests, page objects, visual and accessibility checks, debugging with UI mode and traces, CI on GitHub Actions, and pytest-playwright for Python.',
