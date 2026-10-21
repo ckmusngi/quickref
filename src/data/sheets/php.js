@@ -130,17 +130,39 @@ export default {
           note: 'The built-in server is for development only. Use Nginx + PHP-FPM in production (see the cloud deploy guides).',
         },
         {
-          title: '7. Project layout',
+          title: '7. File structure',
           lang: 'text',
           code: c`
             my-app/
-              composer.json   composer.lock
-              public/index.php      # web root
-              src/                  # your classes (App\...)
-              tests/
-              vendor/               # installed packages (never commit)
-              .env                  # secrets (use vlucas/phpdotenv to load)
+            ├── public/                 # web root: the ONLY folder the server exposes
+            │   ├── index.php           # front controller / home page
+            │   ├── login.php  register.php  logout.php
+            │   ├── dashboard.php       # protected page
+            │   ├── forgot.php  reset.php
+            │   └── assets/             # css/  js/  images/
+            ├── src/                    # your code (namespace App\)
+            │   ├── bootstrap.php       # session, autoload, db, auth: required by every page
+            │   ├── config.php          # returns an array of settings
+            │   ├── db.php              # returns a PDO connection
+            │   ├── auth.php            # current_user(), require_login(), CSRF helpers
+            │   ├── helpers.php         # e() and other global functions (autoload "files")
+            │   ├── Models/             # App\Models\User → src/Models/User.php
+            │   └── Services/           # App\Services\Mailer → src/Services/Mailer.php
+            ├── templates/              # HTML views
+            │   └── partials/           # header.php  nav.php  footer.php
+            ├── database/
+            │   └── schema.sql          # CREATE TABLE users, password_resets…
+            ├── storage/                # logs/  cache/  uploads/ (writable, not public)
+            ├── tests/                  # PHPUnit tests (namespace Tests\)
+            ├── vendor/                 # Composer packages (never commit)
+            ├── .env                    # secrets (never commit; load with vlucas/phpdotenv)
+            ├── .env.example            # committed template of .env
+            ├── .gitignore              # vendor/  .env  storage/*
+            ├── composer.json
+            ├── composer.lock           # commit it: pins exact versions
+            └── phpunit.xml
             `,
+          note: 'Point the web server at public/ so src/, vendor/, .env and storage/ can never be requested by URL. Pages in public/ start with require __DIR__ . \'/../src/bootstrap.php\';',
         },
         {
           title: '8. Add tests and code style',
