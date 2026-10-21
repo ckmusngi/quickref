@@ -51,6 +51,43 @@ export default function SheetPage() {
       .filter(sec => sec.items.length)
   }, [sheet, filter])
 
+  // Scroll-spy: the active section is the last one whose top has passed the sticky header
+  const [activeId, setActiveId] = useState(null)
+  useEffect(() => {
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
+      let current = sections[0]?.id ?? null
+      for (const sec of sections) {
+        const el = document.getElementById(sec.id)
+        if (el && el.getBoundingClientRect().top <= 120) current = sec.id
+      }
+      if (atBottom && sections.length) current = sections[sections.length - 1].id
+      setActiveId(current)
+    }
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [sections])
+
+  // Keep the active link visible inside the sidebar's own scroll area
+  useEffect(() => {
+    const link = document.querySelector('.toc a.active:not(.toc-group-title)')
+    const box = link?.closest('.toc-inner')
+    if (!box) return
+    const l = link.getBoundingClientRect(), b = box.getBoundingClientRect()
+    if (l.top < b.top + 40 || l.bottom > b.bottom - 40) {
+      box.scrollTo({ top: box.scrollTop + l.top - b.top - b.height / 2, behavior: 'smooth' })
+    }
+  }, [activeId])
+
   if (!sheet && slugAliases[slug]) return <Navigate to={`/sheets/${slugAliases[slug]}`} replace />
   if (!sheet) return <NotFound />
 
@@ -64,13 +101,35 @@ export default function SheetPage() {
           <h4>On this sheet</h4>
           {groupRuns(sheet.sections).map(run => run.group ? (
             <div key={run.id} className="toc-group">
-              <a href={`#${run.id}`} className="toc-group-title" onClick={scrollTo(run.id)}>{run.group}</a>
+              <a
+                href={`#${run.id}`}
+                className={`toc-group-title ${run.sections.some(sec => sec.id === activeId) ? 'active' : ''}`}
+                onClick={scrollTo(run.id)}
+              >
+                {run.group}
+              </a>
               {run.sections.map(sec => (
-                <a key={sec.id} href={`#${sec.id}`} onClick={scrollTo(sec.id)}>{sec.title}</a>
+                <a
+                  key={sec.id}
+                  href={`#${sec.id}`}
+                  className={sec.id === activeId ? 'active' : undefined}
+                  aria-current={sec.id === activeId ? 'location' : undefined}
+                  onClick={scrollTo(sec.id)}
+                >
+                  {sec.title}
+                </a>
               ))}
             </div>
           ) : (
-            <a key={run.id} href={`#${run.id}`} onClick={scrollTo(run.id)}>{run.sections[0].title}</a>
+            <a
+              key={run.id}
+              href={`#${run.id}`}
+              className={run.id === activeId ? 'active' : undefined}
+              aria-current={run.id === activeId ? 'location' : undefined}
+              onClick={scrollTo(run.id)}
+            >
+              {run.sections[0].title}
+            </a>
           ))}
           {related.length > 0 && (
             <>

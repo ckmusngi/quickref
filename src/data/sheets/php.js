@@ -131,7 +131,7 @@ export default {
         },
         {
           title: '7. File structure',
-          lang: 'text',
+          lang: 'tree',
           code: c`
             my-app/
             ├── public/                 # web root: the ONLY folder the server exposes

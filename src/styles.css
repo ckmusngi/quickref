@@ -13,6 +13,7 @@
   --blue-soft: #e6eefe;
   --blue-text: #1d4ed8;
   --code-bg: #f3f6fc;
+  --folder: #e0a106;
   --shadow: 0 1px 2px rgba(15, 27, 51, 0.05), 0 4px 16px rgba(37, 99, 235, 0.06);
 }
 
@@ -29,6 +30,7 @@
   --blue-soft: #15284f;
   --blue-text: #93c5fd;
   --code-bg: #0b1530;
+  --folder: #fbbf24;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
@@ -320,6 +322,15 @@ select.input {
 .toc-group-title { color: var(--text); font-weight: 600; padding: 3px 0 3px 10px; border-left: 2px solid var(--blue); }
 .toc-group > a:not(.toc-group-title) { color: var(--muted); padding: 2px 0 2px 22px; border-left: 2px solid var(--border); font-size: 13.5px; }
 .toc-group a:hover { color: var(--blue-text); }
+/* Scroll-spy: the section currently on screen */
+.toc-inner > a:not(.link), .toc-group > a { transition: color 0.15s, background-color 0.15s, border-color 0.15s; }
+.toc-group-title:not(.active) { border-left-color: var(--border); }
+.toc-inner > a.active:not(.link),
+.toc-group > a.active:not(.toc-group-title) {
+  color: var(--blue-text); font-weight: 600;
+  border-left-color: var(--blue); background: var(--blue-soft);
+  border-radius: 0 6px 6px 0;
+}
 
 .sheet { min-width: 0; }
 .sheet-head { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 20px; }
@@ -369,6 +380,25 @@ select.input {
 .copy-btn:hover { color: var(--blue-text); border-color: var(--border); background: var(--surface); }
 .code pre { margin: 0; padding: 12px; overflow-x: auto; font-size: 12.5px; line-height: 1.6; }
 .code code { color: var(--text); }
+
+/* File trees (lang: 'tree') */
+.tree {
+  padding: 10px 6px; overflow-x: auto;
+  font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12.5px; line-height: 1.75;
+}
+.tree-row {
+  display: flex; align-items: center; gap: 6px;
+  width: max-content; min-width: 100%;
+  padding: 0 8px; border-radius: 6px; white-space: pre;
+}
+.tree-row:hover { background: var(--blue-soft); }
+.tree-guide { color: var(--border); margin-right: -2px; }
+.tree-icon { width: 14px; height: 14px; flex: none; }
+.is-dir .tree-icon { color: var(--folder); }
+.is-file .tree-icon { color: var(--muted); }
+.is-dir .tree-name { color: var(--blue-text); font-weight: 600; }
+.tree-comment { color: var(--muted); font-style: italic; margin-left: auto; padding-left: 24px; }
+.tree-comment::before { content: '# '; opacity: 0.6; }
 
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--border); background: var(--bg-soft); padding-top: 40px; }
